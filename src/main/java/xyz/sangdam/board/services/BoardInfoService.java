@@ -127,9 +127,9 @@ public class BoardInfoService {
             /* 이름 검색 E */
 
             if (sopt.equals("ALL")) { // 통합 검색
-                 orBuilder.or(boardData.subject.concat(boardData.content)
-                        .contains(skey))
-                         .or(nameCondition);
+                orBuilder.or(boardData.subject.concat(boardData.content)
+                                .contains(skey))
+                        .or(nameCondition);
 
             } else if (sopt.equals("SUBJECT")) { // 제목 검색
                 condition = boardData.subject.contains(skey);
@@ -273,7 +273,7 @@ public class BoardInfoService {
     }
 
     public RequestBoard getForm(BoardData item, DeleteStatus status) {
-       return new ModelMapper().map(item, RequestBoard.class);
+        return new ModelMapper().map(item, RequestBoard.class);
     }
 
     public RequestBoard getForm(Long seq) {

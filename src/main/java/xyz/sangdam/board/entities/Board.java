@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.tomcat.jni.FileInfo;
+import xyz.sangdam.file.entities.FileInfo;
 import xyz.sangdam.global.entities.BaseMemberEntity;
 import xyz.sangdam.member.constants.Authority;
 import org.springframework.util.StringUtils;

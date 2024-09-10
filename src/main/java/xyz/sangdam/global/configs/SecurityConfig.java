@@ -33,11 +33,11 @@ public class SecurityConfig {
                 .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(h -> {
                     h.authenticationEntryPoint((req, res, e) -> res.sendError(HttpStatus.UNAUTHORIZED.value()));
-                   h.accessDeniedHandler((req, res, e) -> res.sendError(HttpStatus.UNAUTHORIZED.value()));
+                    h.accessDeniedHandler((req, res, e) -> res.sendError(HttpStatus.UNAUTHORIZED.value()));
                 })
                 .authorizeHttpRequests(c -> {
-                        c.requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
-                                .anyRequest().permitAll();
+                    c.requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
+                            .anyRequest().permitAll();
                 });
 
         return http.build();

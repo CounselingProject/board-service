@@ -1,5 +1,3 @@
-package xyz.sangdam.board.validators;
-
 import lombok.RequiredArgsConstructor;
 import xyz.sangdam.board.controllers.RequestComment;
 import xyz.sangdam.global.validators.PasswordValidator;

@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
-@RestControllerAdvice("org.choongang")
+@RestControllerAdvice("xyz.sangdam")
 public class CommonControllerAdvice {
     private final Utils utils;
 

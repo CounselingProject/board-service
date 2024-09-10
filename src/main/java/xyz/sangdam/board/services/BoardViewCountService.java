@@ -33,7 +33,7 @@ public class BoardViewCountService {
         QBoardView bv = QBoardView.boardView;
         long total = viewRepository.count(bv.seq.eq(seq));
 
-        data.setViewCount((int)total);
+        data.setViewCount((int) total);
         dataRepository.saveAndFlush(data);
     }
 }

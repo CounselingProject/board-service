@@ -1,6 +1,10 @@
 package xyz.sangdam.board.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import xyz.sangdam.board.entities.Board;
 import xyz.sangdam.board.entities.BoardData;
 import xyz.sangdam.board.entities.CommentData;
@@ -15,10 +19,6 @@ import xyz.sangdam.global.exceptions.UnAuthorizedException;
 import xyz.sangdam.global.services.SessionService;
 import xyz.sangdam.member.MemberUtil;
 import xyz.sangdam.member.constants.Authority;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
 

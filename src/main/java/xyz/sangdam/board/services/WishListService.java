@@ -2,12 +2,12 @@ package xyz.sangdam.board.services;
 
 import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 import xyz.sangdam.board.entities.QWishList;
 import xyz.sangdam.board.entities.WishList;
 import xyz.sangdam.board.repositories.WishListRepository;
 import xyz.sangdam.member.MemberUtil;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 

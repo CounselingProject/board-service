@@ -10,6 +10,8 @@ import xyz.sangdam.board.entities.Board;
 import xyz.sangdam.board.entities.QBoard;
 import xyz.sangdam.board.exceptions.BoardNotFoundException;
 import xyz.sangdam.board.repositories.BoardRepository;
+import xyz.sangdam.file.entities.FileInfo;
+import xyz.sangdam.file.services.FileInfoService;
 import xyz.sangdam.global.ListData;
 import xyz.sangdam.global.Pagination;
 import org.modelmapper.ModelMapper;
@@ -28,6 +30,7 @@ import static org.springframework.data.domain.Sort.Order.desc;
 @RequiredArgsConstructor
 public class BoardConfigInfoService {
     private final BoardRepository boardRepository;
+    private final FileInfoService fileInfoService;
     private final HttpServletRequest request;
 
     /**
@@ -67,15 +70,13 @@ public class BoardConfigInfoService {
      */
     public void addBoardInfo(Board board) {
         String gid = board.getGid();
-        /*
+
         List<FileInfo> htmlTopImages = fileInfoService.getList(gid, "html_top");
 
         List<FileInfo> htmlBottomImages = fileInfoService.getList(gid, "html_bottom");
 
         board.setHtmlTopImages(htmlTopImages);
         board.setHtmlBottomImages(htmlBottomImages);
-
-         */
     }
 
     /**
