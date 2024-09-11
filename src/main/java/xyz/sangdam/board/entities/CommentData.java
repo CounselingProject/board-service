@@ -18,7 +18,7 @@ public class CommentData extends BaseMemberEntity {
     @ToString.Exclude
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    private BoardData boardData;
+    private BoardData boardData; // 게시글번호(BoardData의 seq)
 
     @Column(length=80)
     private String email; // 로그인한 회원 이메일 주소

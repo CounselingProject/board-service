@@ -1,0 +1,13 @@
+package xyz.sangdam.board.entities;
+
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
+public class LikeId {
+    private Long seq;
+    private String email;
+}
