@@ -20,6 +20,9 @@ public class RequestBoard {
 
     private boolean notice; // 공지글 여부
 
+    // 비밀 게시판을 위한 데이터 추가!
+    private boolean secret;
+
     private String category;
 
     @NotBlank

@@ -37,7 +37,7 @@ public class Board extends BaseMemberEntity {
     @Column(length=60, nullable = false)
     private String bName; // 게시판 이름
 
-    private boolean active; // 사용 여부
+    private boolean active; // 사용 여부 -> 게시판을 보일지 안 보일지 설정
 
     private int rowsPerPage = 20; // 1페이지 게시글 수
 

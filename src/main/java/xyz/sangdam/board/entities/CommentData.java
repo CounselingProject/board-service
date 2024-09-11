@@ -13,7 +13,7 @@ import xyz.sangdam.global.entities.BaseMemberEntity;
 @Table(indexes = @Index(name="idx_comment_basic", columnList = "createdAt ASC"))
 public class CommentData extends BaseMemberEntity {
     @Id @GeneratedValue
-    private Long seq;
+    private Long seq; // 댓글 번호
 
     @ToString.Exclude
     @JsonIgnore
