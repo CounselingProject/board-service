@@ -8,6 +8,10 @@ import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import xyz.sangdam.board.constants.DeleteStatus;
 import xyz.sangdam.board.controllers.BoardDataSearch;
 import xyz.sangdam.board.controllers.RequestBoard;
@@ -28,14 +32,8 @@ import xyz.sangdam.global.services.SessionService;
 import xyz.sangdam.member.MemberUtil;
 import xyz.sangdam.member.constants.Authority;
 import xyz.sangdam.member.entities.Member;
-import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 @Transactional
@@ -47,6 +45,7 @@ public class BoardInfoService {
     private final BoardConfigInfoService configInfoService;
     private final FileInfoService fileInfoService;
     private final WishListService wishListService;
+    private final LikeService likeService;
     private final CommentInfoService commentInfoService;
 
     private final HttpServletRequest request;
@@ -409,5 +408,9 @@ public class BoardInfoService {
         item.setShowDelete(showDelete);
         item.setShowList(showList);
         // 게시글 버튼 노출 권한 처리 E
+
+        /* 좋아요 수 업데이트 */
+        long likes = likeService.getLikeCount(item.getSeq());
+        item.setLikeCount(likes);
     }
 }

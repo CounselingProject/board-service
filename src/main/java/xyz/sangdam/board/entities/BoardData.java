@@ -56,6 +56,9 @@ public class BoardData extends BaseMemberEntity {
     private int viewCount; // 조회수 -> BoardView 테이블 관련! 조인은 아니다!
     private int commentCount; // 댓글 수
 
+    @Transient
+    private long likeCount; // 좋아요 수
+
     private boolean editorView; // 에디터를 사용해서 글 작성했는지 여부
 
     @Column(length=20, updatable = false)

@@ -3,6 +3,9 @@ package xyz.sangdam.board.services.comment;
 import com.querydsl.core.BooleanBuilder;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 import xyz.sangdam.board.controllers.RequestComment;
 import xyz.sangdam.board.entities.BoardData;
 import xyz.sangdam.board.entities.CommentData;
@@ -12,9 +15,6 @@ import xyz.sangdam.board.repositories.BoardDataRepository;
 import xyz.sangdam.board.repositories.CommentDataRepository;
 import xyz.sangdam.global.services.SessionService;
 import xyz.sangdam.member.MemberUtil;
-import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
