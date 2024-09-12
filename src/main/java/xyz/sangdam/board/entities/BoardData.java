@@ -51,7 +51,7 @@ public class BoardData extends BaseMemberEntity {
     private String content;
 
     private int viewCount; // 조회수
-    
+
     private int commentCount; // 댓글 수
 
     @Transient
