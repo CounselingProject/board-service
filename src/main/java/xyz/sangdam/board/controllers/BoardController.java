@@ -7,6 +7,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.*;
+import xyz.sangdam.board.constants.DeleteStatus;
 import xyz.sangdam.board.entities.Board;
 import xyz.sangdam.board.entities.BoardData;
 import xyz.sangdam.board.services.BoardDeleteService;
@@ -20,11 +26,10 @@ import xyz.sangdam.global.ListData;
 import xyz.sangdam.global.Utils;
 import xyz.sangdam.global.exceptions.BadRequestException;
 import xyz.sangdam.global.rests.JSONData;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
+import xyz.sangdam.member.MemberUtil;
+import xyz.sangdam.member.entities.Member;
+
+import java.util.List;
 
 
 @Tag(name = "Board", description = "게시글 API")
@@ -38,6 +43,7 @@ public class BoardController {
     private final BoardViewCountService viewCountService;
     private final BoardValidator validator;
     private final Utils utils;
+    private final MemberUtil memberUtil;
 
 
     @Operation(summary = "게시판 설정 조회", method = "GET")
@@ -160,6 +166,24 @@ public class BoardController {
     @GetMapping("/list/{bid}")
     public JSONData list(@PathVariable("bid") String bid, @ModelAttribute BoardDataSearch search) {
         ListData<BoardData> data = infoService.getList(bid, search);
+
+        return new JSONData(data);
+    }
+
+    @Operation(summary = "내 게시글 목록", method = "GET")
+    @ApiResponse(responseCode = "200")
+    @Parameter(name="page", description = "페이지 번호", example = "1")
+    @Parameter(name="limit", description = "한페이지당 레코드 갯수", example = "20")
+    @GetMapping("/mylist")
+    public JSONData myList(BoardDataSearch search) {
+        if (!memberUtil.isLogin()) {
+            return new JSONData(new ListData<>());
+        }
+
+        Member member = memberUtil.getMember();
+        search.setEmail(List.of(member.getEmail()));
+
+        ListData<BoardData> data = infoService.getList(search, DeleteStatus.UNDELETED);
 
         return new JSONData(data);
     }
