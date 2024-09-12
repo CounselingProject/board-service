@@ -34,9 +34,6 @@ public class BoardData extends BaseMemberEntity {
 
     private boolean notice; // 공지글 여부
 
-    // 비밀 게시판을 위해 추가된 필드!
-    private boolean secret; // 비밀글 여부
-
     @Column(length=40, nullable = false)
     private String poster; // 비회원일 때, 회원일 때/ 지금은 밑에 로그인한 회원명과 회원 이메일일 추가 됐으니까 비회원일 때 쓰인다!
 
@@ -53,7 +50,8 @@ public class BoardData extends BaseMemberEntity {
     @Column(nullable = false)
     private String content;
 
-    private int viewCount; // 조회수 -> BoardView 테이블 관련! 조인은 아니다!
+    private int viewCount; // 조회수
+    
     private int commentCount; // 댓글 수
 
     @Transient
@@ -97,9 +95,6 @@ public class BoardData extends BaseMemberEntity {
 
     @Transient
     private boolean commentable; // 댓글 작성 가능 여부
-
-    @Transient
-    private boolean viewable; // 글 보기 가능 여부
 
     @Transient
     private boolean showEdit; // 글쓰기,수정 버튼 노출 여부

@@ -7,7 +7,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.*;
 import xyz.sangdam.board.entities.CommentData;
+import xyz.sangdam.board.services.BoardAuthService;
 import xyz.sangdam.board.services.comment.CommentDeleteService;
 import xyz.sangdam.board.services.comment.CommentInfoService;
 import xyz.sangdam.board.services.comment.CommentSaveService;
@@ -15,8 +18,6 @@ import xyz.sangdam.board.validators.CommentValidator;
 import xyz.sangdam.global.Utils;
 import xyz.sangdam.global.exceptions.BadRequestException;
 import xyz.sangdam.global.rests.JSONData;
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,6 +30,7 @@ public class CommentController {
     private final CommentSaveService saveService;
     private final CommentDeleteService deleteService;
     private final CommentValidator validator;
+    private final BoardAuthService authService;
     private final Utils utils;
 
     @Operation(summary = "댓글 작성", method = "POST")
@@ -53,6 +55,7 @@ public class CommentController {
             @Parameter(name="content", required = true, description = "댓글 내용")
     })   @PatchMapping
     public JSONData update(@RequestBody @Valid RequestComment form, Errors errors) {
+        authService.check("comment_update", form.getSeq());
         return save(form, errors);
     }
 
@@ -95,10 +98,23 @@ public class CommentController {
     @Parameter(name="seq", required = true, description = "경로변수, 댓글 등록 번호")
     @DeleteMapping("/{seq}")
     public JSONData delete(@PathVariable("seq") Long seq) {
+
+        authService.check("comment_delete", seq);
+
         Long bSeq = deleteService.delete(seq);
 
         List<CommentData> items = infoService.getList(bSeq);
 
         return new JSONData(items);
+    }
+
+    @GetMapping("/auth_check")
+    public void authCheck(@RequestParam("seq") Long seq) {
+        authService.check("comment_update", seq);
+    }
+
+    @GetMapping("/auth_validate")
+    public void authValidate(@RequestParam("password") String password) {
+        //authService.validate(password);
     }
 }

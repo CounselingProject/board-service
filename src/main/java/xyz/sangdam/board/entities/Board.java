@@ -86,6 +86,8 @@ public class Board extends BaseMemberEntity {
     @Column(length=20, nullable = false)
     private Authority commentAccessType = Authority.ALL; // 권한 설정 - 댓글
 
+    private Boolean privateAccess; // 로그인한 사용자만 접근 가능
+
     @Lob
     private String htmlTop; // 게시판 상단 HTML
 
