@@ -19,7 +19,7 @@ import xyz.sangdam.global.exceptions.CommonException;
 import xyz.sangdam.global.exceptions.UnAuthorizedException;
 import xyz.sangdam.global.services.SessionService;
 import xyz.sangdam.member.MemberUtil;
-import xyz.sangdam.member.constants.UserType;
+import xyz.sangdam.member.entities.Member;
 
 import java.util.List;
 
@@ -64,6 +64,14 @@ public class BoardAuthService {
             // 게시판 사용 여부 체크
             if (!board.isActive()) {
                 throw new BoardNotFoundException();
+            }
+
+            // 개인 게시판인 경우 - 개인 게시판인 경우라도 관리자는 접근 가능
+            if (board.isPrivateAccess() && boardData != null && !memberUtil.isAdmin()) {
+                Member member = memberUtil.getMember();
+                if (boardData.getEmail() == null || !memberUtil.isLogin() || !boardData.getEmail().equals(member.getEmail())) {
+                    throw new UnAuthorizedException();
+                }
             }
 
             // 게시글 목록 접근 권한 체크
