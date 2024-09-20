@@ -2,8 +2,7 @@ package xyz.sangdam.member.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
-
-import java.util.List;
+import xyz.sangdam.member.constants.UserType;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -21,5 +20,5 @@ public class Member {
 
     private String mobile;
 
-    private List<Authorities> authorities;
+    private UserType userType;
 }

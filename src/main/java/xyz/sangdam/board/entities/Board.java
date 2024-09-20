@@ -7,10 +7,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.usertype.UserType;
+import org.springframework.util.StringUtils;
 import xyz.sangdam.file.entities.FileInfo;
 import xyz.sangdam.global.entities.BaseMemberEntity;
-import xyz.sangdam.member.constants.Authority;
-import org.springframework.util.StringUtils;
+import xyz.sangdam.member.constants.UserType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,23 +69,23 @@ public class Board extends BaseMemberEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(length=20, nullable = false)
-    private Authority listAccessType = Authority.ALL; // 권한 설정 - 글목록
+    private UserType listAccessType = UserType.ALL; // 권한 설정 - 글목록
 
     @Enumerated(EnumType.STRING)
     @Column(length=20, nullable = false)
-    private Authority viewAccessType = Authority.ALL; // 권한 설정 - 글보기
+    private UserType viewAccessType = UserType.ALL; // 권한 설정 - 글보기
 
     @Enumerated(EnumType.STRING)
     @Column(length=20, nullable = false)
-    private Authority writeAccessType = Authority.ALL; // 권한 설정 - 글쓰기
+    private UserType writeAccessType = UserType.ALL; // 권한 설정 - 글쓰기
 
     @Enumerated(EnumType.STRING)
     @Column(length=20, nullable = false)
-    private Authority replyAccessType = Authority.ALL; // 권한 설정 - 답글
+    private UserType replyAccessType = UserType.ALL; // 권한 설정 - 답글
 
     @Enumerated(EnumType.STRING)
     @Column(length=20, nullable = false)
-    private Authority commentAccessType = Authority.ALL; // 권한 설정 - 댓글
+    private UserType commentAccessType = UserType.ALL; // 권한 설정 - 댓글
 
     private Boolean privateAccess; // 로그인한 사용자만 접근 가능
 

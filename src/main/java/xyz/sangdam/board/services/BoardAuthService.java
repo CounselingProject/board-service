@@ -1,6 +1,7 @@
 package xyz.sangdam.board.services;
 
 import lombok.RequiredArgsConstructor;
+import org.hibernate.usertype.UserType;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ import xyz.sangdam.global.exceptions.CommonException;
 import xyz.sangdam.global.exceptions.UnAuthorizedException;
 import xyz.sangdam.global.services.SessionService;
 import xyz.sangdam.member.MemberUtil;
-import xyz.sangdam.member.constants.Authority;
+import xyz.sangdam.member.constants.UserType;
 
 import java.util.List;
 
@@ -66,20 +67,19 @@ public class BoardAuthService {
             }
 
             // 게시글 목록 접근 권한 체크
-            Authority authority = board.getListAccessType();
-            if (mode.equals("list") && ((authority == Authority.USER && !memberUtil.isLogin()) || (authority == Authority.ADMIN && !memberUtil.isAdmin()))) {
+            UserType authority = board.getListAccessType();
+            if (mode.equals("list") && ((authority == UserType.USER && !memberUtil.isLogin()) || (authority == UserType.ADMIN && !memberUtil.isAdmin()))) {
                 throw new UnAuthorizedException();
             }
 
             // 게시글 보기 접근 권한 체크
-            Authority viewAuthority = board.getViewAccessType();
-            if (mode.equals("view") && ((viewAuthority == Authority.USER && !memberUtil.isLogin()) || (viewAuthority == Authority.ADMIN && !memberUtil.isAdmin()))) {
+            UserType viewAuthority = board.getViewAccessType();
+            if (mode.equals("view") && ((viewAuthority == UserType.USER && !memberUtil.isLogin()) || (viewAuthority == UserType.ADMIN && !memberUtil.isAdmin()))) {
                 throw new UnAuthorizedException();
             }
 
             // 글쓰기 접근 권한 체크
-            Authority writeAuthority = board.getWriteAccessType();
-            if (mode.equals("write") && ((writeAuthority == Authority.USER && !memberUtil.isLogin()) || (writeAuthority == Authority.ADMIN && !memberUtil.isAdmin()))) {
+            if (mode.equals("write") && ((writeAuthority == UserType.USER && !memberUtil.isLogin()) || (writeAuthority == UserType.ADMIN && !memberUtil.isAdmin()))) {
                 throw new UnAuthorizedException();
             }
 

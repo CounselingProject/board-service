@@ -8,6 +8,7 @@ import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.usertype.UserType;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,10 +31,12 @@ import xyz.sangdam.global.ListData;
 import xyz.sangdam.global.Pagination;
 import xyz.sangdam.global.services.SessionService;
 import xyz.sangdam.member.MemberUtil;
-import xyz.sangdam.member.constants.Authority;
+import xyz.sangdam.member.constants.UserType;
 import xyz.sangdam.member.entities.Member;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -374,12 +377,12 @@ public class BoardInfoService {
 
         // 댓글 작성 가능 여부 - 전체 : 모두 가능(비회원 + 회원 + 관리자), 회원 + 관리자 , 관리자
         Board board = item.getBoard();
-        Authority authority = board.getCommentAccessType();
-        if (authority == Authority.ALL || memberUtil.isAdmin()) {
+        UserType authority = board.getCommentAccessType();
+        if (authority == UserType.ALL || memberUtil.isAdmin()) {
             commentable = true;
         }
 
-        if (authority == Authority.USER && memberUtil.isLogin()) {
+        if (authority == UserType.USER && memberUtil.isLogin()) {
             commentable = true;
         }
 
@@ -392,16 +395,16 @@ public class BoardInfoService {
         // 게시글 버튼 노출 권한 처리 S
         boolean showEdit = false, showList= false, showDelete = false;
 
-        Authority editAuthority = board.getWriteAccessType(); // 글작성, 수정 권한
-        Authority listAuthority = board.getListAccessType(); // 글목록 보기 권한
+        UserType editAuthority = board.getWriteAccessType(); // 글작성, 수정 권한
+        UserType listAuthority = board.getListAccessType(); // 글목록 보기 권한
 
 
-        if (editAuthority == Authority.ALL || boardUserEmail == null ||
-                (editAuthority == Authority.USER && memberUtil.isLogin())) { // 수정 삭제 권한이 ALL인 경우, 비회원인 경우, 회원만 가능한 경우 + 로그인한 경우 수정, 삭제 버튼 클릭시 비회원 검증 하므로 노출
+        if (editAuthority == UserType.ALL || boardUserEmail == null ||
+                (editAuthority == UserType.USER && memberUtil.isLogin())) { // 수정 삭제 권한이 ALL인 경우, 비회원인 경우, 회원만 가능한 경우 + 로그인한 경우 수정, 삭제 버튼 클릭시 비회원 검증 하므로 노출
             showEdit = showDelete = true;
         }
 
-        if (listAuthority == Authority.ALL || (listAuthority == Authority.USER && memberUtil.isLogin())) {
+        if (listAuthority == UserType.ALL || (listAuthority == UserType.USER && memberUtil.isLogin())) {
             showList = true;
         }
 

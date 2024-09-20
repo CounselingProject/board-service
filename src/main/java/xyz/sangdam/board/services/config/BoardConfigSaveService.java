@@ -1,20 +1,21 @@
 package xyz.sangdam.board.services.config;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import xyz.sangdam.board.controllers.RequestBoardConfig;
 import xyz.sangdam.board.entities.Board;
 import xyz.sangdam.board.repositories.BoardRepository;
+import xyz.sangdam.file.services.FileUploadDoneService;
 import xyz.sangdam.global.Utils;
-import xyz.sangdam.member.constants.Authority;
-import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
+import xyz.sangdam.member.constants.UserType;
 
 @Service
 @RequiredArgsConstructor
 public class BoardConfigSaveService {
 
     private final BoardRepository boardRepository;
-    //private final FileUploadDoneService fileUploadDoneService;
+    private final FileUploadDoneService fileUploadDoneService;
     private final Utils utils;
 
     public void save(RequestBoardConfig form) {
@@ -44,11 +45,11 @@ public class BoardConfigSaveService {
         board.setSkin(form.getSkin());
         board.setCategory(form.getCategory());
 
-        board.setListAccessType(Authority.valueOf(form.getListAccessType()));
-        board.setViewAccessType(Authority.valueOf(form.getViewAccessType()));
-        board.setWriteAccessType(Authority.valueOf(form.getWriteAccessType()));
-        board.setReplyAccessType(Authority.valueOf(form.getReplyAccessType()));
-        board.setCommentAccessType(Authority.valueOf(form.getCommentAccessType()));
+        board.setListAccessType(UserType.valueOf(form.getListAccessType()));
+        board.setViewAccessType(UserType.valueOf(form.getViewAccessType()));
+        board.setWriteAccessType(UserType.valueOf(form.getWriteAccessType()));
+        board.setReplyAccessType(UserType.valueOf(form.getReplyAccessType()));
+        board.setCommentAccessType(UserType.valueOf(form.getCommentAccessType()));
 
         // 로그인한 사용자만 접근 가능
         board.setPrivateAccess(form.isPrivateAccess());
@@ -61,6 +62,6 @@ public class BoardConfigSaveService {
         boardRepository.saveAndFlush(board);
 
         // 파일 업로드 완료 처리
-        //fileUploadDoneService.process(board.getGid());
+        fileUploadDoneService.process(board.getGid());
     }
 }
