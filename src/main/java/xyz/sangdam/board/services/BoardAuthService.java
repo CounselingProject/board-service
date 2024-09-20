@@ -68,18 +68,32 @@ public class BoardAuthService {
 
             // 게시글 목록 접근 권한 체크
             UserType authority = board.getListAccessType();
-            if (mode.equals("list") && ((authority == UserType.USER && !memberUtil.isLogin()) || (authority == UserType.ADMIN && !memberUtil.isAdmin()))) {
+            if (mode.equals("list") && (
+                    (authority == UserType.USER && !memberUtil.isLogin())
+                            || (authority == UserType.ADMIN && !memberUtil.isAdmin())
+                            || (authority == UserType.STUDENT && !memberUtil.isStudent())
+                            || (authority == UserType.COUNSELOR && !memberUtil.isCounselor())
+                            || (authority == UserType.PROFESSOR && !memberUtil.isProfessor()))) {
                 throw new UnAuthorizedException();
             }
 
             // 게시글 보기 접근 권한 체크
             UserType viewAuthority = board.getViewAccessType();
-            if (mode.equals("view") && ((viewAuthority == UserType.USER && !memberUtil.isLogin()) || (viewAuthority == UserType.ADMIN && !memberUtil.isAdmin()))) {
+            if (mode.equals("view") && (
+                    (viewAuthority == UserType.USER && !memberUtil.isLogin())
+                            || (viewAuthority == UserType.ADMIN && !memberUtil.isAdmin())
+                            || (viewAuthority == UserType.STUDENT && !memberUtil.isStudent())
+                            || (viewAuthority == UserType.COUNSELOR && !memberUtil.isCounselor())
+                            || (viewAuthority == UserType.PROFESSOR && !memberUtil.isProfessor()))) {
                 throw new UnAuthorizedException();
             }
 
             // 글쓰기 접근 권한 체크
-            if (mode.equals("write") && ((writeAuthority == UserType.USER && !memberUtil.isLogin()) || (writeAuthority == UserType.ADMIN && !memberUtil.isAdmin()))) {
+            if (mode.equals("write") && (
+                    (writeAuthority == UserType.USER && !memberUtil.isLogin()) || (writeAuthority == UserType.ADMIN && !memberUtil.isAdmin()))
+                    || (writeAuthority == UserType.STUDENT && !memberUtil.isStudent())
+                    || (writeAuthority == UserType.COUNSELOR && !memberUtil.isCounselor())
+                    || (writeAuthority == UserType.PROFESSOR && !memberUtil.isProfessor())) {
                 throw new UnAuthorizedException();
             }
 

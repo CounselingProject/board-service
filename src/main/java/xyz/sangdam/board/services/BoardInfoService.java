@@ -386,6 +386,18 @@ public class BoardInfoService {
             commentable = true;
         }
 
+        if (authority == UserType.STUDENT && memberUtil.isStudent()) {
+            commentable = true;
+        }
+
+        if (authority == UserType.COUNSELOR && memberUtil.isCounselor()) {
+            commentable = true;
+        }
+
+        if (authority == UserType.PROFESSOR && memberUtil.isProfessor()) {
+            commentable = true;
+        }
+
         item.setEditable(editable);
         item.setCommentable(commentable);
         item.setMine(mine);
@@ -400,11 +412,17 @@ public class BoardInfoService {
 
 
         if (editAuthority == UserType.ALL || boardUserEmail == null ||
-                (editAuthority == UserType.USER && memberUtil.isLogin())) { // 수정 삭제 권한이 ALL인 경우, 비회원인 경우, 회원만 가능한 경우 + 로그인한 경우 수정, 삭제 버튼 클릭시 비회원 검증 하므로 노출
+                (editAuthority == UserType.USER && memberUtil.isLogin())
+                || (editAuthority == UserType.COUNSELOR && memberUtil.isCounselor())
+                || (editAuthority == UserType.PROFESSOR && memberUtil.isProfessor())
+                || (editAuthority == UserType.STUDENT && memberUtil.isStudent())) { // 수정 삭제 권한이 ALL인 경우, 비회원인 경우, 회원만 가능한 경우 + 로그인한 경우 수정, 삭제 버튼 클릭시 비회원 검증 하므로 노출
             showEdit = showDelete = true;
         }
 
-        if (listAuthority == UserType.ALL || (listAuthority == UserType.USER && memberUtil.isLogin())) {
+        if (listAuthority == UserType.ALL || (listAuthority == UserType.USER && memberUtil.isLogin())
+                || (listAuthority == UserType.STUDENT && memberUtil.isStudent())
+                || (listAuthority == UserType.COUNSELOR && memberUtil.isCounselor())
+                || (listAuthority == UserType.PROFESSOR && memberUtil.isProfessor())) {
             showList = true;
         }
 
