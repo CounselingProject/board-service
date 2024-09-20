@@ -1,7 +1,6 @@
 package xyz.sangdam.board.services;
 
 import lombok.RequiredArgsConstructor;
-import org.hibernate.usertype.UserType;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,6 +18,7 @@ import xyz.sangdam.global.exceptions.CommonException;
 import xyz.sangdam.global.exceptions.UnAuthorizedException;
 import xyz.sangdam.global.services.SessionService;
 import xyz.sangdam.member.MemberUtil;
+import xyz.sangdam.member.constants.UserType;
 import xyz.sangdam.member.entities.Member;
 
 import java.util.List;
@@ -97,6 +97,7 @@ public class BoardAuthService {
             }
 
             // 글쓰기 접근 권한 체크
+            UserType writeAuthority = board.getWriteAccessType();
             if (mode.equals("write") && (
                     (writeAuthority == UserType.USER && !memberUtil.isLogin()) || (writeAuthority == UserType.ADMIN && !memberUtil.isAdmin()))
                     || (writeAuthority == UserType.STUDENT && !memberUtil.isStudent())
