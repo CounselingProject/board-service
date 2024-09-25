@@ -30,7 +30,7 @@ public class BoardConfigSaveService {
             board.setGid(form.getGid());
         }
 
-        board.setBName(form.getBName());
+        board.setBName(form.getBname());
         board.setActive(form.isActive());
         board.setRowsPerPage(form.getRowsPerPage());
         board.setPageCountPc(form.getPageCountPc());
@@ -53,9 +53,6 @@ public class BoardConfigSaveService {
 
         // 로그인한 사용자만 접근 가능
         board.setPrivateAccess(form.isPrivateAccess());
-
-        board.setHtmlTop(form.getHtmlTop());
-        board.setHtmlBottom(form.getHtmlBottom());
 
         board.setListOrder(form.getListOrder());
 

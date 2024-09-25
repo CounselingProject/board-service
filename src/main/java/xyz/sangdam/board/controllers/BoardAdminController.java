@@ -45,7 +45,7 @@ public class BoardAdminController {
     })
     @RequestMapping(method={RequestMethod.POST, RequestMethod.PATCH}, path="/save")
     public ResponseEntity<Void> save(@RequestBody @Valid RequestBoardConfig form, Errors errors) {
-
+        System.out.println("form:" + form);
         String method = request.getMethod().toUpperCase();
         String mode = method.equals("POST") ? "add" : "edit";
         form.setMode(mode);
@@ -83,9 +83,10 @@ public class BoardAdminController {
             @Parameter(name="bName", description = "게시판 이름"),
             @Parameter(name="active", description = "게시판 사용중 여부", example = "true")
     })
+    @GetMapping("/list")
     public JSONData list(@ModelAttribute BoardSearch search) {
 
-        ListData data = configInfoService.getList(search, true);
+        ListData<Board> data = configInfoService.getList(search, true);
 
         return new JSONData(data);
     }

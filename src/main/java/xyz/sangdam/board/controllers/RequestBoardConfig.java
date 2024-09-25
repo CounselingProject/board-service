@@ -1,6 +1,7 @@
 package xyz.sangdam.board.controllers;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -20,7 +21,7 @@ public class RequestBoardConfig {
     private String bid; // 게시판 아이디
 
     @NotBlank
-    private String bName; // 게시판 이름
+    private String bname; // 게시판 이름
 
     private boolean active; // 사용 여부
 
@@ -60,8 +61,11 @@ public class RequestBoardConfig {
 
     private boolean privateAccess; // 로그인한 사용자만 접근 가능
 
-    private String htmlTop; // 게시판 상단 HTML
-    private String htmlBottom; // 게시판 하단 HTML
+
+    @Transient
+    private String bName;
+
+
 
     //@Transient
     //private List<FileInfo> htmlTopImages; // 게시판 상단 Top 이미지
