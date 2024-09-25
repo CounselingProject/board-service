@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import xyz.sangdam.board.services.config.BoardConfigDeleteService;
 import xyz.sangdam.global.Utils;
 import xyz.sangdam.global.exceptions.BadRequestException;
 import xyz.sangdam.global.rests.JSONData;
@@ -29,6 +30,7 @@ public class BoardAdminController {
 
     private final BoardConfigSaveService configSaveService;
     private final BoardConfigInfoService configInfoService;
+    private final BoardConfigDeleteService deleteService;
     private final BoardConfigValidator configValidator;
     private final HttpServletRequest request;
     private final Utils utils;
@@ -89,5 +91,13 @@ public class BoardAdminController {
         ListData<Board> data = configInfoService.getList(search, true);
 
         return new JSONData(data);
+    }
+
+    @Operation(summary = "게시판 삭제")
+    @DeleteMapping("/delete/{bid}")
+    public ResponseEntity<Void> delete(@PathVariable("bid") String bid) {
+        deleteService.delete(bid);
+
+        return ResponseEntity.noContent().build();
     }
 }
