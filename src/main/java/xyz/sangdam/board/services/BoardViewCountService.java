@@ -24,16 +24,18 @@ public class BoardViewCountService {
             return;
         }
 
-        int uid = memberUtil.isLogin() ? memberUtil.getMember().getSeq().intValue() : utils.guestUid();
+        try {
+            int uid = memberUtil.isLogin() ? memberUtil.getMember().getSeq().intValue() : utils.guestUid();
 
-        BoardView boardView = new BoardView(seq, uid);
-        viewRepository.saveAndFlush(boardView);
+            BoardView boardView = new BoardView(seq, uid);
+            viewRepository.saveAndFlush(boardView);
 
-        // 전체 조회수
-        QBoardView bv = QBoardView.boardView;
-        long total = viewRepository.count(bv.seq.eq(seq));
+            // 전체 조회수
+            QBoardView bv = QBoardView.boardView;
+            long total = viewRepository.count(bv.seq.eq(seq));
 
-        data.setViewCount((int)total);
-        dataRepository.saveAndFlush(data);
+            data.setViewCount((int) total);
+            dataRepository.saveAndFlush(data);
+        } catch (Exception e) {}
     }
 }
