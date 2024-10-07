@@ -2,18 +2,19 @@ package xyz.sangdam.board.services;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import xyz.sangdam.board.controllers.RequestBoard;
 import xyz.sangdam.board.entities.Board;
 import xyz.sangdam.board.entities.BoardData;
 import xyz.sangdam.board.exceptions.BoardDataNotFoundException;
 import xyz.sangdam.board.repositories.BoardDataRepository;
 import xyz.sangdam.board.services.config.BoardConfigInfoService;
+import xyz.sangdam.file.services.FileUploadDoneService;
 import xyz.sangdam.member.MemberUtil;
 import xyz.sangdam.member.entities.Member;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 @Service
 @Transactional
@@ -26,7 +27,7 @@ public class BoardSaveService {
     private final BoardDataRepository boardDataRepository;
     private final BoardInfoService infoService;
     private final MemberUtil memberUtil;
-    //private final FileUploadDoneService doneService;
+    private final FileUploadDoneService doneService;
 
     public BoardData save(RequestBoard form) {
 
@@ -91,7 +92,7 @@ public class BoardSaveService {
         boardDataRepository.saveAndFlush(data);
 
         // 파일 업로드 완료 처리
-        //doneService.process(gid);
+        doneService.process(gid);
 
         return infoService.get(data.getSeq());
     }
